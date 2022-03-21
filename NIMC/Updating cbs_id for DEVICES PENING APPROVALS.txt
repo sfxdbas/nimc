@@ -1,0 +1,15 @@
+-----updating cbs_request_id for devices PENDING approvals 
+with tab1 as (
+select row_number() OVER (ORDER BY requested_device_id) AS rownum,
+zdtr.requested_device_id as device_id,zdtr.pk ,zdtre.cbs_request_id,tag_approval_status_enum
+from zz_device_tag_request zdtr
+left join zz_device_tag_request_ext zdtre  on zdtre.pk = zdtr.pk 
+where tag_approval_status_enum = 'APPROVED' and requested_device_id in ('SAMSUNG-356136107931513','SAMSUNG-356136107926380',
+'SAMSUNG-358893192465017')
+)
+---select rownum, device_id, cbs_request_id from tab1 t1
+select 'update device_tag_request_ext set cbs_request_id = '''||cbs_request_id || ''' where device_id = ''' || device_id || ''';'
+from tab1 t1
+where rownum in (select max(rownum) from tab1 t2
+where t2.device_id = t1.device_id)
+and device_id is not null;

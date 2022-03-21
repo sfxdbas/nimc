@@ -1,0 +1,6 @@
+/*insert into setting 
+values( nextval('hibernate_sequence'),'This determines if a user details should be cached on login', 'CACHE-USER-DETAILS-ON-LOGIN', 
+'true');
+insert into setting 
+values(nextval('hibernate_sequence'),'When CBS is not reachable this flag determines whether we should retrieve the saved details from SAVE-CBS-USER process',
+'ENABLED-LOCAL-USER-LOGIN','true');*/

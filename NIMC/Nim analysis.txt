@@ -1,0 +1,32 @@
+ /*tracking ID, file name, instance ip, port, registration type, registration time, file sync date, 
+ last modified, processing time (in seconds), CBS notification time 
+ (this is last modified for that tracking ID in enrollment notification table)*/
+
+
+
+select nsl.tracking_id, nsl.filename, nsl.instance_ip, nsl.instance_port, nsl.reg_type, nsl.registration_time, 
+nsl.file_sync_date, nsl.last_modified,
+round(cast(((EXTRACT(EPOCH FROM (nsl.last_modified - nsl.file_sync_date)))) as numeric),2) as processing_time_in_seconds,
+enl.last_modified as CBS_notification_time, enl.notification_mode 
+from nimc_sync_log nsl
+left join enrollment_notification_log enl on enl.tracking_id = nsl.tracking_id
+where date(nsl.create_date) between '2021-10-25' and '2021-10-29' 
+order by nsl.file_sync_date desc;
+
+
+/*For report 2, let’s have the following columns: device ID, tag, last heartbeat timestamp, total sent, total confirmed, 
+total yet to confirm (total sent - total confirmed), total backend registrations (both successful & failed), last backend 
+registration time (this is the last time an enrollment was logged in NSL for the device)*/
+
+select distinct nsl.ref_device_id as device_id, nsl.kit_tag, max(hb.receipt_timestamp) as heart_beat_timestamp, 
+sum(case when enl.send_status = 'SUCCESS' then 1 else 0 end) as total_sent , 
+sum(case when nsl.registration_status = 'SYNC_CONFIRMED' then 1 else 0 end) as total_confirmed,
+(sum(case when enl.send_status = 'SUCCESS' then 1 else 0 end) - 
+sum(case when nsl.registration_status = 'SYNC_CONFIRMED' then 1 else 0 end)) as total_yet_to_confirm,
+sum(case when nsl.registration_status = 'SYNC_PENDING_CONFIRMATION' then 1 else 0 end) as Total_Pending,
+count(nsl.registration_status) as total_sent, max(nsl.registration_time) as last_backend_registration_time
+from nimc_sync_log nsl
+left join heart_beat hb on hb.tag = nsl.kit_tag
+left join enrollment_notification_log enl on enl.tracking_id = nsl.tracking_id
+where date(nsl.create_date) between '2021-10-25' and '2021-10-29'
+group by nsl.ref_device_id, nsl.kit_tag ;

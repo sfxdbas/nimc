@@ -1,0 +1,63 @@
+select this_.PK as PK1_17_12_, this_.ACTIVE as ACTIVE2_17_12_, this_.CREATE_DATE as CREATE_D3_17_12_, 
+this_.DELETED as DELETED4_17_12_, this_.LAST_MODIFIED as LAST_MOD5_17_12_, 
+this_.CBS_ACCT_CODE as CBS_ACCT6_17_12_, this_.COMPANY_NAME as COMPANY_7_17_12_, 
+this_.EMAIL as EMAIL8_17_12_, this_.MOBILE_NO as MOBILE_N9_17_12_, this_.VENDOR_ID as VENDOR_10_17_12_, 
+enrollment2_.FEP_ID as FEP_ID1_15_14_, outlet3_.PK as CENTER_I2_15_14_, outlet3_.PK as PK1_29_0_, 
+outlet3_.ACTIVE as ACTIVE2_29_0_, outlet3_.CREATE_DATE as CREATE_D3_29_0_, 
+outlet3_.DELETED as DELETED4_29_0_, outlet3_.LAST_MODIFIED as LAST_MOD5_29_0_, 
+outlet3_.address as address6_29_0_, outlet3_.COORDINATE_ADDRESS as COORDINA7_29_0_, 
+outlet3_.FEP_FK as FEP_FK22_29_0_, outlet3_.KYC_DEALER_FK as KYC_DEA23_29_0_, 
+outlet3_.LATITUDE as LATITUDE8_29_0_, outlet3_.LONGITUDE as LONGITUD9_29_0_, outlet3_.MODE as MODE10_29_0_, 
+outlet3_.name as name11_29_0_, outlet3_.OUTLET_CODE as OUTLET_12_29_0_, 
+outlet3_.OUTLET_PASSWORD as OUTLET_13_29_0_, outlet3_.OUTLET_PICTUR
+
+
+
+
+select setting0_.ID as ID1_34_, setting0_.DESCRIPTION as DESCRIPT2_34_, setting0_.NAME as NAME3_34_, 
+setting0_.VALUE as VALUE4_34_ from SETTING setting0_ where setting0_.NAME=$1
+
+
+select this_.ID as ID1_12_13_, this_.KM_USER_FK as KM_USER_7_12_13_, 
+this_.APP_VERSION as APP_VERS2_12_13_, this_.DATE_ADDED as DATE_ADD3_12_13_, this_.DEVICE_ID as DEVICE_I4_12_13_, 
+this_.MAC_ADDRESS as MAC_ADDR5_12_13_, this_.TAG_ID as TAG_ID6_12_13_, kmuser2_.PK as PK1_18_0_,
+ kmuser2_.ACTIVE as ACTIVE2_18_0_, kmuser2_.CREATE_DATE as CREATE_D3_18_0_, kmuser2_.DELETED as DELETED4_18_0_, 
+kmuser2_.LAST_MODIFIED as LAST_MOD5_18_0_, kmuser2_.DEALER_FK as DEALER_20_18_0_, 
+kmuser2_.ZONE_FK as ZONE_FK21_18_0_, kmuser2_.CLIENT_FIRST_LOGIN as CLIENT_F6_18_0_, kmuser2_.EMAIL_ADDRESS as EMAIL_AD7_18_0_, 
+kmuser2_.FAILED_LOGIN_ATTEMPTS as FAILED_L8_18_0_, kmuser2_.FIRST_NAME as FIRST_NA9_18_0_, 
+kmuser2_.GENDER as GENDER10_18_0_, kmuser2_.LAST_FAILED_LOGIN as LAST_FA11_18_0_, 
+kmuser2_.LAST_PASSWORD_CHANGE as LAST_PA12_18_0_, kmuser2_.LAST_SUCCESSFUL_LOGIN as LAST_SU13_18_0_, 
+kmuser2_.LOCKED_OUT as LOCKED_14_18_0_, kmuser2_.MOBILE as MOBILE15_18_0_, kmuser2_.ORBITA_ID as ORBITA_16_18_0_, 
+kmuser2_.OTHER_NAME as OTHER_N17_1
+
+
+
+select ncal.SYNC_STATUS as sync_status, ncal.SERVICE_RESPONSE as message 
+from CLIENT_ACTIVITY_LOG_EXT ncal where ncal.RECORD_ID = $1 limit $2;
+
+
+
+
+SELECT c.oid, a.attnum, a.attname, c.relname, n.nspname, a.attnotnull OR 
+(t.typtype = 'd' AND t.typnotnull), a.attidentity != '' OR pg_catalog.pg_get_expr(d.adbin, d.adrelid) 
+LIKE '%nextval(%' 
+FROM pg_catalog.pg_class c 
+JOIN pg_catalog.pg_namespace n ON (c.relnamespace = n.oid) 
+JOIN pg_catalog.pg_attribute a ON (c.oid = a.attrelid) 
+JOIN pg_catalog.pg_type t ON (a.atttypid = t.oid) 
+LEFT JOIN pg_catalog.pg_attrdef d ON (d.adrelid = a.attrelid AND d.adnum = a.attnum) 
+JOIN (SELECT 12248 AS oid , 1 AS attnum UNION ALL 
+SELECT 12248, 2 UNION ALL SELECT 12248, 3 UNION ALL SELECT 12248, 4 UNION ALL 
+SELECT 12248, 5 UNION ALL SELECT 12248, 6 UNION ALL SELECT 12248, 7 UNION ALL 
+SELECT 12248, 8 UNION ALL SELECT 12248, 9 UNION ALL SELECT 12248, 10 UNION ALL 
+SELECT 12248, 11 UNION ALL SELECT 12248, 12 UNION ALL SELECT 12248, 13 UNION ALL 
+SELECT 12248, 14 UNION ALL SELECT 12248, 15 UNION ALL SELECT 12248, 16 UNION ALL SELECT 12248, 17 
+UNION ALL SELECT 12248, 18 UNION ALL SELECT 12248, 19 UNION ALL SELECT 12248, 20) vals ON
+
+
+
+
+
+
+select ncal.SYNC_STATUS as sync_status, ncal.SERVICE_RESPONSE as message 
+from CLIENT_ACTIVITY_LOG_EXT ncal where ncal.RECORD_ID = $1 limit $2

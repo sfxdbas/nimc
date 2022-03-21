@@ -1,0 +1,15 @@
+---PROVIDING DEVICE ACTIVATION DATA FOR DEVICES
+
+
+--insert into device_activation_data
+select distinct nextval('hibernate_sequence') , true, localtimestamp, false, localtimestamp, nsl.device_id, nsl.outlet_code, prod_backend_service_host_name, prod_backend_service_port, 
+prod_backend_ws_password, prod_backend_ws_username, prod_data_upload_url, prod_enc_service_host_name, prod_enc_service_port, prod_personalization_url, prod_secret_phrase, test_backend_service_host_name, 
+test_backend_service_port, test_backend_ws_password, test_backend_ws_username, test_data_upload_url, test_enc_service_host_name, test_enc_service_port, test_personalization_url, test_secret_phrase
+from (select distinct nsl.ref_device_id as device_id, o.outlet_code
+from  nimc_sync_log nsl
+left join device_tag_request_ext dtre on dtre.device_id = nsl.ref_device_id
+left join outlet o on o.pk  = dtre.outlet_fk
+where nsl.ref_device_id in ('HENA-354628482784931')) as nsl
+cross join
+device_activation_data dad  
+where dad.pk = 10389;

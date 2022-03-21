@@ -1,0 +1,5 @@
+----provision DIASPORA-ENROLLMENT-USE-CASE setting for devices
+insert into device_specific_setting(pk,active,create_date,deleted,last_modified,setting_name,setting_value,enrollment_ref_fk)
+select nextval('hibernate_sequence') as pk, 'true' as active, localtimestamp as create_date, 'false' as deleted, 
+localtimestamp as last_modified,'DIASPORA-ENROLLMENT-USE-CASE' as setting_name,'ADULT_MODIFICATION,CHILD_MODIFICATION'as setting_value,
+(select id from enrollment_ref er where device_id = 'SAMSUNG-356420091573584')as enrollment_ref_fk;

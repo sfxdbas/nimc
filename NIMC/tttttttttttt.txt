@@ -1,0 +1,64 @@
+
+-----------------------------------------------
+
+pls help retrieve the device activation payload for these devices
+HENA-354628482795606 and HENA-354628486664667
+@Samson Akporotu Pls help retrieve their activation status
+
+613208
+
+*s3amf1x321#
+*s3amf1x#
+@Cam'R0n0fFszN
+s3amf1x321@50W
+LilTj@JerMn12
+Ra9ha3LW@m1#
+P@55word2
+b&EYMhP8
+
+
+
+
+
+
+select COUNT(*) from nimc_sync_log_status nsls where filename = 'NIN-i4rCDqAZTi-R7qfBG2FW7KqgNeNydm7FtmlcJvtJtxI=';
+
+uk_ddeh0ohugugxqr15ebq73hf4o
+
+select * from nimc_sync_log_status nsls where filename = 'NIN-i4rCDqAZTi-R7qfBG2FW7KqgNeNydm7FtmlcJvtJtxI=';
+
+0R34PBLSP92FB51 
+0R34PBLSB3DMQ2T
+
+Please team we need to start logging our request on Jira. 
+some of these request get lost in these chats. i'm multitasking, 
+i can't optimally track these request on multiple chats at the same time
+
+
+
+
+"E:\fix\Nimc_Linux_ProdDB_Backup\report_db_backup\"
+
+fileshare server directory
+10.1.37.5
+sambauser
+*s3amf1x321#
+
+TCFNI5215950
+
+
+
+'0QJT69ISMF9B92G',
+'0QZJ6915ZkHTE35',
+'0QZJ691351NJA2H',
+'0QZJ6915VMZ6ZJD',
+'0QZJ69153AU0W21'
+
+'DROID-5120-NM0127-1630769098084'
+
+
+
+
+
+
+

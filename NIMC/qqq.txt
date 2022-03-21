@@ -1,0 +1,34 @@
+select count (distinct device_id) from enrollment_ref er, node n2 
+where n2.enrollment_ref = er.id and n2.active = '1'; ---and n2.deleted = '0';
+
+select * from device_tag_request_ext where cbs_request_id ='HENA-354628482806593';
+
+select  distinct esa_code, device_id from enrollment_notification_log enl
+where device_id in (
+select er.device_id from enrollment_ref er
+join node n on n.enrollment_ref  = er.id
+where   N.active = '1' and n.certification_status  = upper('Certified'));
+
+---);
+
+select er. from node n 
+join enrollment_ref er on er.id = n.enrollment_ref
+where N.active = '1' and n.certification_status  = upper('Certified');
+
+select distinct esa_code, enroller_name, device_id from enrollment_notification_log enl;
+
+select distinct device_id from enrollment_ref;
+
+
+
+select * from front_end_partner fep  ;
+
+select fdm.device_id || '----------' || fep.company_name || '----------' || fep.cbs_acct_code from fep_device_mapping fdm
+join front_end_partner fep ON fep.pk = fdm.front_end_partner_fk 
+where fdm.device_id in (
+select er.device_id from enrollment_ref er
+join node n on n.enrollment_ref  = er.id
+where   N.active = '1' and n.certification_status  = upper('Certified'));
+
+
+select * from nimc_sync_log nsl;

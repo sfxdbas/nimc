@@ -1,0 +1,58 @@
+a. 	CREATE TABLE users (
+	id SERIAL PRIMARY KEY,
+	username VARCHAR(25) not null,
+	email VARCHAR(50) not null,
+	create_date timestamp,
+	last_login_date timestamp,
+	CONSTRAINT email_unique_con UNIQUE(email)
+	);
+	CREATE INDEX username_indx ON users (username);
+
+
+b.	CREATE TABLE Topic(
+	id SERIAL PRIMARY KEY,
+	created_by integer REFERENCES users(id),
+	topic VARCHAR(30) not null,
+	description VARCHAR(500) null,
+	create_date timestamp,
+	CONSTRAINT topic_unique_con UNIQUE(topic)
+	);
+
+	CREATE UNIQUE INDEX topic_idx ON Topic(topic);
+	
+c.	CREATE TABLE post(
+	id SERIAL PRIMARY KEY,
+	created_by integer REFERENCES users(id) ON DELETE SET NULL,
+	topic_id integer REFERENCES topic(id) ON DELETE CASCADE,
+	title VARCHAR(100) not null,
+	url  VARCHAR(1000) null,
+	create_date timestamp
+	);
+
+d.i	CREATE TABLE "comment"(
+	id SERIAL PRIMARY KEY,
+	comment_by integer REFERENCES users(id) ON DELETE SET NULL,
+	post_id integer REFERENCES post(id) ON DELETE CASCADE,
+	parent_id integer REFERENCES "comment"(parent_id) ON DELETE CASCADE,
+	comment_text text not null,
+	create_date timestamp
+	);
+
+d.ii	CREATE TABLE thread(
+	id SERIAL PRIMARY KEY,
+	comment_id integer REFERENCES comment(id) ON DELETE CASCADE,
+	replied_by integer REFERENCES users(id) ON DELETE SET NULL,
+	create_date timestamp
+	);
+
+e. 	CREATE TABLE vote(
+	id SERIAL PRIMARY KEY,
+	voted_by integer REFERENCES users(id) ON DELETE SET NULL,
+	post_id integer REFERENCES post(id) ON DELETE CASCADE,
+	vote text null,
+	vote_value integer check (vote_value = '1' or vote = '-1'),	
+	create_date timestamp,
+	CONSTRAINT votedby_postod_unique_con UNIQUE(voted_by, post_id)
+	);
+
+

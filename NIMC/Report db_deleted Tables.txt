@@ -1,0 +1,154 @@
+-- public.alert_receiver definition
+
+-- Drop table
+
+-- DROP TABLE public.alert_receiver;
+
+CREATE TABLE public.alert_receiver (
+	pk numeric(19) NOT NULL,
+	active bool NOT NULL,
+	create_date timestamp NOT NULL,
+	deleted bool NOT NULL,
+	last_modified timestamp NOT NULL,
+	email varchar(255) NOT NULL,
+	full_name text NULL,
+	mobile varchar(255) NULL,
+	CONSTRAINT alert_receiver_pkey PRIMARY KEY (pk)
+);
+
+
+
+-- public.alert_receiver_mapper definition
+
+-- Drop table
+
+-- DROP TABLE public.alert_receiver_mapper;
+
+CREATE TABLE public.alert_receiver_mapper (
+	alert_fk int8 NOT NULL,
+	alert_receiver_fk int8 NOT NULL,
+	CONSTRAINT alert_receiver_mapper_pkey PRIMARY KEY (alert_fk, alert_receiver_fk)
+);
+
+
+-- public.alert_receiver_mapper foreign keys
+
+ALTER TABLE public.alert_receiver_mapper ADD CONSTRAINT fk1ysm79oh3ogffiijvbb4uk0gu FOREIGN KEY (alert_receiver_fk) REFERENCES alert_receiver(pk);
+ALTER TABLE public.alert_receiver_mapper ADD CONSTRAINT fkixi2b3n4odg2cdhxfkad1c0ll FOREIGN KEY (alert_fk) REFERENCES rpt_alert(pk);
+
+
+
+-- public.rpt_alert definition
+
+-- Drop table
+
+-- DROP TABLE public.rpt_alert;
+
+CREATE TABLE public.rpt_alert (
+	pk numeric(19) NOT NULL,
+	active bool NOT NULL,
+	create_date timestamp NOT NULL,
+	deleted bool NOT NULL,
+	last_modified timestamp NOT NULL,
+	created_by varchar(255) NULL,
+	description text NULL,
+	title varchar(128) NOT NULL,
+	"type" numeric(10) NOT NULL,
+	report_fk numeric(19) NOT NULL,
+	schedule_fk numeric(19) NOT NULL,
+	CONSTRAINT rpt_alert_pkey PRIMARY KEY (pk)
+);
+
+
+-- public.rpt_alert foreign keys
+
+ALTER TABLE public.rpt_alert ADD CONSTRAINT fk6aqhwbuqpn09pearwq3dr5oo4 FOREIGN KEY (schedule_fk) REFERENCES rpt_schedule(pk);
+ALTER TABLE public.rpt_alert ADD CONSTRAINT fkfi7jykbs92tei6li555w0rmgg FOREIGN KEY (report_fk) REFERENCES report(pk);
+
+
+
+-- public.rpt_schedule definition
+
+-- Drop table
+
+-- DROP TABLE public.rpt_schedule;
+
+CREATE TABLE public.rpt_schedule (
+	pk numeric(19) NOT NULL,
+	active bool NOT NULL,
+	create_date timestamp NOT NULL,
+	deleted bool NOT NULL,
+	last_modified timestamp NOT NULL,
+	created_by varchar(255) NULL,
+	custom_interval float8 NULL,
+	description text NULL,
+	last_run_time timestamp NULL,
+	next_run_time timestamp NULL,
+	rpt_interval varchar(255) NOT NULL,
+	sch_name text NOT NULL,
+	start_time timestamp NOT NULL,
+	CONSTRAINT rpt_schedule_pkey PRIMARY KEY (pk)
+);
+
+
+
+
+-- public.report definition
+
+-- Drop table
+
+-- DROP TABLE public.report;
+
+CREATE TABLE public.report (
+	pk numeric(19) NOT NULL,
+	active bool NOT NULL,
+	create_date timestamp NOT NULL,
+	deleted bool NOT NULL,
+	last_modified timestamp NOT NULL,
+	use_orbita_id bool NULL,
+	created_by varchar(255) NULL,
+	description text NULL,
+	"name" text NOT NULL,
+	report_url text NOT NULL,
+	"type" varchar(255) NOT NULL,
+	CONSTRAINT report_pkey PRIMARY KEY (pk)
+);
+
+
+
+
+-- public.alert_entity_type_mapper definition
+
+-- Drop table
+
+-- DROP TABLE public.alert_entity_type_mapper;
+
+CREATE TABLE public.alert_entity_type_mapper (
+	alert_fk numeric(19) NOT NULL,
+	entity_type_fk numeric(19) NOT NULL,
+	CONSTRAINT alert_entity_type_mapper_pkey PRIMARY KEY (alert_fk, entity_type_fk)
+);
+
+
+-- public.alert_entity_type_mapper foreign keys
+
+ALTER TABLE public.alert_entity_type_mapper ADD CONSTRAINT fkbh55unustevog6vnawpdp5kr FOREIGN KEY (entity_type_fk) REFERENCES entity_type(pk);
+ALTER TABLE public.alert_entity_type_mapper ADD CONSTRAINT fkin95ps1tf7iqjms96aglu4l6p FOREIGN KEY (alert_fk) REFERENCES rpt_alert(pk);
+
+
+
+-- public.entity_type definition
+
+-- Drop table
+
+-- DROP TABLE public.entity_type;
+
+CREATE TABLE public.entity_type (
+	pk numeric(19) NOT NULL,
+	active bool NOT NULL,
+	create_date timestamp NOT NULL,
+	deleted bool NOT NULL,
+	last_modified timestamp NOT NULL,
+	"type" varchar(255) NOT NULL,
+	CONSTRAINT entity_type_pkey PRIMARY KEY (pk)
+);

@@ -1,0 +1,20 @@
+select nsl.registration_status, 
+case when cale.production_capture is TRUE then 'PRODUCTION_CAPTURE'
+when cale.production_capture is FALSE then 'TEST_CAPTURE' else null end as "CAPUTRE_TYPE"
+, max(nsl.create_date) as Last_Entry_Date, count(*) as count_of_records 
+from nimc_sync_log nsl
+left join client_activity_log cal on cal.unique_activity_code = nsl.tracking_id
+left join client_activity_log_ext cale on cale.pk = cal.pk
+where date(nsl.create_date) = date(localtimestamp) 
+group by 1,2
+order by 3 desc;
+
+
+select cale.sync_status , 
+case when cale.production_capture is TRUE then 'PRODUCTION_CAPTURE'
+when cale.production_capture is FALSE then 'TEST_CAPTURE' else null end as "CAPUTRE_TYPE"
+, max(cal.create_date) as Last_Entry_Date, count(*) as count_of_records 
+from client_activity_log cal 
+left join client_activity_log_ext cale on cale.pk = cal.pk
+where date(cal.create_date) = date(localtimestamp) -1
+group by 1,2;

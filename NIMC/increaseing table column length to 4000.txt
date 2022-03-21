@@ -1,0 +1,13 @@
+ALTER TABLE public.client_activity_log_ext ALTER COLUMN service_response TYPE varchar(4000) USING service_response::varchar;
+
+
+
+ALTER TABLE public.nimc_sync_log ALTER COLUMN reason3 TYPE varchar(4000) USING reason3::varchar;
+
+
+ALTER TABLE public.nimc_sync_log_status ALTER COLUMN reason1 TYPE varchar(4000) USING reason1::varchar;
+
+/*ALTER TABLE public.client_activity_log_ext ALTER column service_response  TYPE varchar(4000) USING service_response::varchar;
+ALTER TABLE public.nimc_sync_log ALTER column reason3  TYPE varchar(4000) USING reason3::varchar;
+ALTER TABLE public.zz_nimc_sync_log ALTER column reason3  TYPE varchar(4000) USING reason3::varchar;
+ALTER TABLE public.nimc_sync_log_status ALTER COLUMN reason1 TYPE varchar(4000) USING reason1::varchar;*/

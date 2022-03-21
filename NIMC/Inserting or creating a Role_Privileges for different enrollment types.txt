@@ -1,0 +1,8 @@
+---insert into km_role_privilege
+select kr.pk as "role_fk", kp.pk as Privilege_fk, nextval('hibernate_sequence') as pk, true, localtimestamp, false, localtimestamp 
+from km_role kr cross join km_privilege kp 
+where kr.pk = 569 and kp.pk = 260195;
+
+select * from km_privilege kp where pk = 260195;
+
+select * from km_role_privilege krp;

@@ -1,0 +1,71 @@
+/*insert into public.alert_receiver (pk, active, create_date, deleted, last_modified, email, full_name, mobile)
+values (nextval('hibernate_sequence'),'1',LOCALTIMESTAMP, '0', LOCALTIMESTAMP, 'bodili@seamfix.com','Best Odili', NULL);
+
+insert into alert_receiver
+values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'Sakporotu@seamfix.com','Samson Akporotu', null);
+
+
+insert into alert_receiver
+values (nextval('hibernate_sequence'),'True',localtimestamp, 'False', localtimestamp, 'cduru@seamfix.com','Chibuzor Duru', null);*/
+
+
+---insert into alert_receiver_mapper
+select p.alert_fk, ar.pk  from alert_receiver ar cross join alert_entity_type_mapper P where email like '%@seamfix.com' and p.alert_fk in (163,165);
+
+select * from alert_entity_type_mapper;
+select * from alert_receiver;
+select * from entity_type et;
+select * from rpt_alert ra;
+select * from  alert_receiver_mapper;
+
+/*insert into public.alert_receiver (pk, active, create_date, deleted, last_modified, email, full_name, mobile)
+values (nextval('hibernate_sequence'),'1',LOCALTIMESTAMP, '0', LOCALTIMESTAMP, 'ddennis@seamfix.com','David Dennis', NULL);
+
+insert into alert_receiver
+values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'dobiakor@seamfix.com','Doris Obiakor', null);
+
+
+insert into alert_receiver
+values (nextval('hibernate_sequence'),'True',localtimestamp, 'False', localtimestamp, 'yramoni@seamfix.com','yusuf ramoni', null);*/
+
+
+/*insert into alert_receiver_mapper
+select p.alert_fk, pk  from alert_receiver ar cross join alert_entity_type_mapper P where PK not in(123,
+124,
+125,
+126,
+127,
+128);*/
+
+
+
+
+/*insert into public.alert_receiver (pk, active, create_date, deleted, last_modified, email, full_name, mobile)
+values (nextval('hibernate_sequence'),'1',LOCALTIMESTAMP, '0', LOCALTIMESTAMP, 'Kayode.Aina@nimc.gov.ng','Kayode Aina', NULL);
+
+insert into alert_receiver
+values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'Bridget.Oviasogie@nimc.gov.ng','Bridget Oviasogie', null);
+
+
+insert into alert_receiver
+values (nextval('hibernate_sequence'),'True',localtimestamp, 'False', localtimestamp, 'Alvan.Ikoku@nimc.gov.ng','Alvan Ikoku', null);*/
+
+/*insert into alert_receiver_mapper
+select p.alert_fk, ar.pk  from alert_receiver ar cross join alert_entity_type_mapper P where ar.PK not in(124,
+126,
+127,
+128,
+129,
+130,
+131,
+132,
+133,
+134,
+135,
+136,
+137,
+138,
+139,
+140,
+141,
+142) and p.alert_fk = 147;*/

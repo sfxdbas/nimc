@@ -1,0 +1,22 @@
+/*INSERT INTO alert_receiver values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'cemewulu@seamfix.com','ChimezieEmewulu', null);
+INSERT INTO alert_receiver values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'doluwasegun@seamfix.com','DiyanOluwasegun', null);
+INSERT INTO alert_receiver values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'dobiakor@seamfix.com','DorisObiakor', null);
+INSERT INTO alert_receiver values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'eoguno@seamfix.com','EbukaOguno', null);
+INSERT INTO alert_receiver values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'fatube@seamfix.com','FrankAtube', null);
+INSERT INTO alert_receiver values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'iama@seamfix.com','IfeanyiAma', null);
+INSERT INTO alert_receiver values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'nmadu@seamfix.com','NnannaMadu', null);
+INSERT INTO alert_receiver values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'oajah@seamfix.com','OlamideAjah', null);
+INSERT INTO alert_receiver values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'conwurah@seamfix.com','OnwurahChibuzor', null);
+INSERT INTO alert_receiver values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'bodili@seamfix.com','BestOdili', null);
+INSERT INTO alert_receiver values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'catuegbu@seamfix.com','chukwumaAtuegbu', null);
+INSERT INTO alert_receiver values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'dunuane@seamfix.com','DavidUnuane', null);
+INSERT INTO alert_receiver values (nextval('hibernate_sequence'),'1',localtimestamp, '0', localtimestamp, 'iudoh@seamfix.com','IfiokUdoh', null);
+
+insert into alert_receiver_mapper
+select p.alert_fk, pk  from alert_receiver ar cross join alert_entity_type_mapper P where PK not in(123,
+124,
+125,
+126,
+127,
+128,
+129);*/

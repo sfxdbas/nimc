@@ -1,0 +1,1 @@
+For future occurrences Registration status  on nimc sync log is same as sync status from client activity log

@@ -1,0 +1,20 @@
+select name from outlet where outlet_code in (select centre_code from (select centre_code, max(count_not_sync)as max_count, min(count_not_sync)as min_count from ( select o.outlet_code as centre_code, 
+case when sync_status = 'SYNC_CONFIRMED' then 1 else 2 end as count_not_sync
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+where production_capture is true
+--and service_response = '10:Invalid Login'
+and o.outlet_code in (select o.outlet_code as centre_code
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+where production_capture is true
+and service_response = '10:Invalid Login'
+and sync_status <> 'SYNC_CONFIRMED')
+)a group by centre_code)b 
+where max_count = 2 
+and min_count != 1 
+order by centre_code);

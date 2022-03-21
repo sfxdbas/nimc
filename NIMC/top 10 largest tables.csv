@@ -1,0 +1,11 @@
+"table_schema","table_name","total_size","count_of_rows"
+public,agility_integration_log_,"3263 MB",8750306
+public,client_activity_log,"2003 MB",6209419
+public,heart_beat,"1875 MB",4427711
+public,nimc_sync_log_status,"1671 MB",4337301
+public,revinfo,"100 MB",745010
+public,zz_nimc_sync_log,"368 MB",745008
+public,nimc_sync_log,"481 MB",622265
+public,client_activity_log_ext,"305 MB",611244
+public,enrollment_notification_log,"294 MB",583388
+public,nin_hash_log,"126 MB",269064

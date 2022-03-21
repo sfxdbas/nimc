@@ -1,0 +1,84 @@
+----Distribution of Sucessfull Enrollments
+
+select notification_mode , count (*) from enrollment_notification_log enl
+group by notification_mode;
+
+
+
+
+----Details of Enrollments with Error 40
+
+select cal.ref_device_id "device_id", dtre.cbs_request_id, o.outlet_code as center_Code ,cal.unique_activity_code "tracking_Id", sync_status, cal.create_date, o.outlet_code as center_Code, o.name as center, service_response  
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+where service_response like '40%' 
+order by cal.unique_activity_code, cal.create_date  desc; 
+
+
+
+
+----Successful Enrollment vs Failed Enrollment (From Inception to Previous Day)
+
+select Count_of_Failed_Enrollments, Count_of_Successful_Enrollment  from 
+(select distinct  count(*) Count_of_Failed_Enrollments
+from nimc_sync_log nsl
+where  nsl.registration_status = 'SYNC_FAILED_VALIDATION' and date(nsl.create_date) <= date(localtimestamp) - 1) t1,
+(select count (*) Count_of_Successful_Enrollment from enrollment_notification_log enl
+where notification_mode = 'PRODUCTION' and date(enl.create_date) <=  date(localtimestamp) - 1
+group by notification_mode) t2;
+
+
+
+
+-----Successful Enrollment vs Failed Enrollment (Previous Day)
+
+select Count_of_Failed_Enrollments, Count_of_Successful_Enrollment  from 
+(select distinct  count(*) Count_of_Failed_Enrollments
+from nimc_sync_log nsl
+where  nsl.registration_status = 'SYNC_FAILED_VALIDATION' and date(nsl.create_date) = date(localtimestamp) - 1) t1,
+(select count (*) Count_of_Successful_Enrollment from enrollment_notification_log enl
+where notification_mode = 'PRODUCTION' and date(enl.create_date) =  date(localtimestamp) - 1
+group by notification_mode) t2;
+
+
+
+
+-----Count_of_Enrollments_with_ERROR_40 (Production Capture vs Test Capture)
+
+select * from 
+(select count(*) as No_of_Enrollments_with_ERROR_40_Production_Capture
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join enrollment_notification_log enl on enl.tracking_id = cale.tracking_id
+where service_response like '40%' and cale.production_capture = 'true')t1,
+(select count(*) as No_of_Enrollments_with_ERROR_40_Test_Capture
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join enrollment_notification_log enl on enl.tracking_id = cale.tracking_id
+where service_response like '40%' and cale.production_capture = 'false')t2;
+
+
+
+
+----Count of Activated devices for previous month
+
+select Count(*) count_of_activated_devices from device_tag_request dtr
+where dtr.tag_approval_status_enum = 'APPROVED' 
+and extract(year from dtr.create_date) = extract(year from localtimestamp)  and extract(month from dtr.create_date) = extract(month from localtimestamp) -1;
+
+
+
+
+----Count of Activated devices for previous month till date
+
+select Count(*) Count_of_Activated_devices from device_tag_request dtr
+where dtr.tag_approval_status_enum = 'APPROVED' 
+and extract(year from dtr.create_date) = extract(year from localtimestamp)  and extract(month from dtr.create_date) >= extract(month from localtimestamp) -1;
+
+
+
+

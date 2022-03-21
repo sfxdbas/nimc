@@ -1,0 +1,4 @@
+/*---INSERT INTO public.provisioned_vendors(pk, active, create_date, deleted, last_modified, app_id, app_key, app_name, vendor_id, user_id)
+select nextval('hibernate_sequence'), active, localtimestamp as create_date, deleted, localtimestamp as last_modified, 
+'com.seamfix.sasp.agent' as app_id, app_key,  'SASP' as app_name, vendor_id, user_id 
+from provisioned_vendors pv where pk = 297*/;

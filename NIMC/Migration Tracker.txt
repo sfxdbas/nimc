@@ -1,0 +1,12 @@
+key_detail ------ --------------------------------------- up to date
+device_tag_request_ext ---------------------------------- up to date
+km_privilege--------------------------------------------- up to date
+km_role-------------------------------------------------- up to date
+km_role_privilege --------------------------------------- up to date
+node----------------------------------------------------- up to date
+enrolment_ref-------------------------------------------- up to date
+outlet -------------------------------------------------- up to date
+provisioned_vendors-------------------------------------- up to date
+device_tag_request_approval------------------------------ up to date
+fep_device_mapping--------------------------------------- up to date
+km_user (only for a user - fatube@seamfix.com)----------  up to date 

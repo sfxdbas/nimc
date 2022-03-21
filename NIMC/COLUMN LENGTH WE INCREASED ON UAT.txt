@@ -1,0 +1,12 @@
+ALTER TABLE public.outlet ALTER COLUMN outlet_production_username TYPE varchar(4000) USING outlet_production_username::varchar;
+ALTER TABLE public.zz_outlet ALTER COLUMN outlet_production_username TYPE varchar(4000) USING outlet_production_username::varchar;
+
+
+ALTER TABLE public.nimc_sync_log ALTER column reason3  TYPE varchar(2000) USING reason3::varchar;
+ALTER TABLE public.zz_nimc_sync_log ALTER column reason3  TYPE varchar(2000) USING reason3::varchar;
+
+
+
+
+/*ALTER TABLE public.outlet ALTER COLUMN "name" TYPE varchar(4000) USING outlet_production_username::varchar;
+ALTER TABLE public.zz_outlet ALTER COLUMN "name" TYPE varchar(4000) USING outlet_production_username::varchar;*/

@@ -1,0 +1,915 @@
+
+
+select count(er.device_id) , enl.esa_code, fep.company_name, n.certification_status, enl.notification_mode from node n 
+left join enrollment_ref er  on er.id = n.enrollment_ref
+left join enrollment_notification_log enl on enl.device_id = er.device_id
+left join front_end_partner fep on fep.cbs_acct_code = enl.esa_code 
+group by n.certification_status, enl.esa_code, n.active = '1' , fep.company_name, enl.notification_mode
+having n.certification_status  = 'CERTIFIED' and n.active = '1' and enl.notification_mode = 'PRODUCTION';  -----987
+
+
+
+
+select send_status, esa_code, originating_center_code , originating_center_name, create_date, 
+last_modified from enrollment_notification_log enl where notification_mode = 'PRODUCTION' order by create_date DESC;
+
+
+select cbs_request_id from device_tag_request_ext dtre where device_id  = 'HENA-354628486675184';
+
+
+
+
+select count(NoofDevices), esa_code, company_name from (
+select count(er.device_id) as NoofDevices , enl.esa_code, fep.company_name, n.certification_status, enl.notification_mode from node n 
+left join enrollment_ref er  on er.id = n.enrollment_ref
+left join enrollment_notification_log enl on enl.device_id = er.device_id
+left join front_end_partner fep on fep.cbs_acct_code = enl.esa_code 
+group by n.certification_status, enl.esa_code, n.active = '1' , fep.company_name, enl.notification_mode, enl.create_date
+having n.certification_status  = 'CERTIFIED' and n.active = '1' and enl.notification_mode = 'PRODUCTION' and enl.create_date > '2021-05-19') 
+a group by esa_code, company_name order by company_name ;
+
+
+
+
+select current_date;
+
+
+
+------update setting set VALUE = value ||',ZF10' where id = 41682367;
+
+
+select * from setting s where value like '%11211%';
+
+
+select * from   outlet o2  ;
+
+
+select device_id, cbs_request_id, o.outlet_code, o.name, o.outlet_username, kd.pk, o.address, na.lga_fk, na.state_fk ,o.mode, o.longitude, o.latitude  
+from device_tag_request_ext dtre 
+left join outlet o on o.pk  = dtre.outlet_fk
+left join node_assignment na on na.outlet_fk  = o.pk
+left join kyc_dealer kd on kd.pk = o.kyc_dealer_fk 
+where device_id = 'HENA-354628486675184';
+
+
+select device_id, cbs_request_id, o.outlet_code, o.name, o.outlet_username, o.mode, o.longitude, o.latitude  from device_tag_request_ext dtre 
+left join outlet o on o.pk  = dtre.outlet_fk 
+where device_id = 'HENA-354628482803004';
+
+
+
+select enrollment_ref_fk, dtr.* from device_tag_request dtr where requested_device_id = 'SAMSUNG-356196381726856';
+
+
+
+
+
+SELECT DEVICE_ID ,er.*,n.id, n.certification_status, er.DEVICE_ID  FROM ENROLLMENT_REF er 
+LEFT JOIN node n ON n.ENROLLMENT_REF = er.ID
+WHERE er.device_id  = 'HENA-354628482851003';
+
+
+SELECT n.id, n.certification_status, er.DEVICE_ID, n.sync_status  FROM ENROLLMENT_REF er 
+LEFT JOIN node n ON n.ENROLLMENT_REF = er.ID
+WHERE er.device_id  = 'SAMSUNG-355579421310040';
+
+
+
+select *  from client_activity_log_ext cale;
+
+
+select REGISTRATION_STATUS  from nimc_sync_log nsl ;
+
+
+select distinct sync_status from node o ;
+
+/*update node
+set certification_status = null
+where id = 2188270;*/
+
+
+select count(countq), send_status from (
+select  count(pk) "countq", send_status from enrollment_notification_log enl2 
+group by send_status, notification_mode , create_date
+having notification_mode = 'PRODUCTION' and cast(create_date as date) = cast(current_date as date)) a group by send_status ;
+
+
+select  count(pk) "countq", send_status from enrollment_notification_log enl2 
+group by send_status, notification_mode 
+having notification_mode = 'PRODUCTION';
+
+select  count(pk) "countq", send_status,create_date  from enrollment_notification_log enl2 
+group by send_status, notification_mode , create_date
+having notification_mode = 'PRODUCTION' and cast(create_date as date) = cast(current_date as date); 
+
+
+select cast (create_date as date) from enrollment_notification_log enl ; 
+
+
+SELECT n.id, n.certification_status, er.DEVICE_ID, n.sync_status  FROM ENROLLMENT_REF er 
+LEFT JOIN node n ON n.ENROLLMENT_REF = er.ID
+WHERE er.device_id  in (
+SELECT device_id from enrollment_notification_log enl where notification_mode = 'PRODUCTION');
+
+
+
+
+
+SELECT table_catalog, table_schema, table_name,column_name, data_type, numeric_precision
+FROM information_schema.columns 
+WHERE table_schema='public' and column_name = 'sync_status';
+
+
+select device_id, cbs_request_id, o.outlet_code, o.name, o.outlet_username, o.mode, o.longitude, o.latitude  
+from device_tag_request_ext dtre 
+left join outlet o on o.pk  = dtre.outlet_fk 
+where outlet_code = '242280';
+
+select device_id, cbs_request_id, o.outlet_code, o.name, o.outlet_username, o.mode, o.longitude, o.latitude  
+from device_tag_request_ext dtre 
+left join outlet o on o.pk  = dtre.outlet_fk 
+where dtre.device_id in ('SAMSUNG-358893192469696',
+'SAMSUNG-358893192468516',
+'SAMSUNG-358893192470223',
+'SAMSUNG-35889319247015');
+
+
+select device_id, device_tag_request_fk, tag_approval_status_enum from device_tag_request_ext dtre 
+left join device_requisition_request dtr on dtr.pk  = dtre.pk
+left join device_tag_request_approval dtra on dtra.device_tag_request_fk = dtr.pk ;
+where device_id in ('SAMSUNG-358893192469696',
+'SAMSUNG-358893192468516',
+'SAMSUNG-358893192470223',
+'SAMSUNG-35889319247015');
+
+
+select * from device_tag_request_approval dtra
+left join device_tag_request dtr ON  dtr.pk = dtra.device_tag_request_fk;
+where requested_device_id  = 'HENA-354628486675184-1622318254822';
+
+
+
+select pk, * from device_tag_request_ext dtre 
+where device_id = 'HENA-354628486675184'; -----2,169,104
+
+select * from setting where "name" = 'SYNC-DATA-TIMEOUT-DURATION';
+
+select * from device_tag_request
+where requested_device_id = 'HENA-354628486675184'; ----2,169,104
+
+
+select  device_id,tracking_id, notification_mode ,send_status from enrollment_notification_log enl2 
+where notification_mode = 'PRODUCTION' and send_status = 'SUCCESS';
+
+------------------
+-------------
+----select count(device_id) device_Id from (
+select  enl2.device_id,tracking_id, notification_mode, n.certification_status, send_status , 
+ail.backup_path, ail.request_type , enl2.create_date , enl2.last_modified , esa_code, fep.company_name 
+from enrollment_notification_log enl2 
+left join front_end_partner fep on fep.cbs_acct_code = enl2.esa_code 
+left join enrollment_ref er on er.device_id = enl2.device_id 
+left join node n on n.enrollment_ref = er.id
+left join agility_integration_log_ ail on ail.msisdn = enl2.tracking_id 
+where notification_mode = 'PRODUCTION' and n.certification_status = 'CERTIFIED' and dev;
+
+
+
+select  enl2.device_id,tracking_id, notification_mode, n.certification_status, send_status, enl2.create_date , enl2.last_modified , esa_code, fep.company_name 
+from enrollment_notification_log enl2 
+left join front_end_partner fep on fep.cbs_acct_code = enl2.esa_code 
+left join enrollment_ref er on er.device_id = enl2.device_id 
+left join node n on n.enrollment_ref = er.id
+where notification_mode = 'PRODUCTION' and n.certification_status = 'CERTIFIED' and esa_code = 'NM0127';
+
+
+---) a;
+select * from client_activity_log_ext cale  where record_id in ('0QUDLP4SJ7UQIMR',
+'0QUDLP4SJKOB8QB',
+'0QUDLP4SJWWIKPR',
+'0QUDLP4SMVM6YBT');
+
+
+select outlet_code , outlet_username from outlet o;
+select record_id , service_response , sync_status from client_activity_log_ext cale  where in ('0QTN9PLSQLJYYFF',
+'0QTN9PLSZJU5CRE',
+'0QTN9PLSYGQQLLD',
+'0QTN9PLSHGYCVMY',
+'0QTN9PLSK9DJDGI',
+'0QTN9PLS6OD1G2C',
+'0QTN9PLS4MNTTQH',
+'0QTN9PLS6U4YV6B',
+'0QTN9PLSLI4MYSH',
+'0QTN9PLS8HMNMUR',
+'0QTN9PLSNMLPF98',
+'0QTP32JSBVR645T',
+'0QTP32JSZIXQ4US',
+'0QTP32JSEBSN9XL',
+'0QTP32JSVCX3BCL',
+'0QTP32JSYHOL0UU',
+'0QTP32JSQYUEFJV',
+'0QTP32JSDYCQUP8',
+'0QTP32JS7KV2VHD',
+'0QTN9PLSMSOQFFI'
+);
+
+---select * from enrollment_notification_log enl2   ;
+select nsl.tracking_id, registration_status, rejection_reason, filename, target_path, enl.esa_code  from nimc_sync_log nsl 
+left join enrollment_notification_log enl on enl.tracking_id = nsl.tracking_id 
+where nsl.tracking_id in ('0QTN9PLSQLJYYFF',
+'0QTN9PLSZJU5CRE',
+'0QTN9PLSYGQQLLD',
+'0QTN9PLSHGYCVMY',
+'0QTN9PLSK9DJDGI',
+'0QTN9PLS6OD1G2C',
+'0QTN9PLS4MNTTQH',
+'0QTN9PLS6U4YV6B',
+'0QTN9PLSLI4MYSH',
+'0QTN9PLS8HMNMUR',
+'0QTN9PLSNMLPF98',
+'0QTP32JSBVR645T',
+'0QTP32JSZIXQ4US',
+'0QTP32JSEBSN9XL',
+'0QTP32JSVCX3BCL',
+'0QTP32JSYHOL0UU',
+'0QTP32JSQYUEFJV',
+'0QTP32JSDYCQUP8',
+'0QTP32JS7KV2VHD',
+'0QTN9PLSMSOQFFI'
+);
+/*where  tracking_id not in (
+select  tracking_id
+from enrollment_notification_log enl2 
+left join enrollment_ref er on er.device_id = enl2.device_id 
+left join node n on n.enrollment_ref = er.id
+where notification_mode = 'PRODUCTION' and n.certification_status = 'CERTIFIED');
+--------------- 2,567
+-------2,566
+
+--select * from setting s where "name" = 'SETTINGS_INTERVAL';
+
+---select * from nimc_sync_log nsl where  tracking_id not in 
+select  * 
+from enrollment_notification_log enl2
+--left join nimc_sync_log nsl on nsl.tracking_id = enl2.tracking_id 
+---left join enrollment_ref er on er.device_id = enl2.device_id 
+---left join node n on n.enrollment_ref = er.id
+where enl2.device_id in ('0QUDLP4SJ7UQIMR',
+'0QUDLP4SJKOB8QB',
+'0QUDLP4SJWWIKPR',
+'0QUDLP4SMVM6YBT');
+
+select  device_id,tracking_id, notification_mode ,send_status from enrollment_notification_log enl2 
+where  notification_mode = 'PRODUCTION'; -----and send_status = 'SUCCESS' and tracking_id  = '0QM3X6BSEFVW005%';
+
+select  device_id,tracking_id, notification_mode ,send_status from enrollment_notification_log enl2 
+where tracking_id  = '0QM3X6BSEFVW005';
+
+select * from enrollment_notification_log enl where pk = 2147483647;
+
+
+
+
+
+
+select * from enrollment_notification_log order by create_date desc;  ------2,573, 2,576
+
+
+select * from agility_integration_log_ where lower(request_type)  = 'device_activation';
+
+
+select count(tracking_id), tracking_id from enrollment_notification_log group by tracking_id  having count(tracking_id ) > 1;
+
+
+select * from setting s where id = 356766; -----"name" = 'THRESHOLD-VERSION';
+
+/*update setting
+set value = 'E:\fix\_bio\receivedfiles\syncs'
+where id =356766;*/
+
+select * from setting s where value like  '%10.1.37.5%';
+
+select * from setting s where value like  '%10.1.37.5%';
+
+
+
+select dtre.cbs_request_id, tag_approval_status_enum, requested_device_id, dtre.esa_code 
+from device_tag_request dtr left join device_tag_request_ext dtre on  dtre.pk = dtr.pk 
+where  dtre.cbs_request_id = 'MANTRA-911573953215427';
+
+select * from device_tag_request_approval dtra ;
+
+
+select er.device_id , enl.esa_code, fep.company_name, n.certification_status, enl.notification_mode 
+from node n 
+left join enrollment_ref er  on er.id = n.enrollment_ref
+left join enrollment_notification_log enl on enl.device_id = er.device_id
+left join front_end_partner fep on fep.cbs_acct_code = enl.esa_code 
+where er.device_id = 'MANTRA-911573953215427'; 
+
+
+select dta.*, dtr.requested_device_id 
+from device_tag_request dtr left join device_tag_request_ext dtre on  dtre.pk = dtr.pk 
+left join device_tag_request_approval dta on dta.device_tag_request_fk = dtr.pk 
+where  dtr.requested_device_id  = 'MANTRA-911573953215427';
+
+select er.device_id, n.*
+from node n 
+left join enrollment_ref er  on er.id = n.enrollment_ref
+left join enrollment_notification_log enl on enl.device_id = er.device_id
+left join front_end_partner fep on fep.cbs_acct_code = enl.esa_code 
+where er.device_id = 'SAMSUNG-356420091573584'; 
+
+select * from client_activity_log cal where cal.tr;
+
+select * from client_activity_log_ext cale
+where cale;
+
+select * from nimc_sync_log order by last_modified desc;
+
+
+select * from outlet o2 ;
+
+
+select nsl.*, cale.service_response,  from nimc_sync_log nsl left 
+join client_activity_log_ext cale on cale.record_id  = nsl.tracking_id 
+where tracking_id in ('OQTS2NFSJW5OUEX',
+'OQTS2NFSKUUL63S',
+'OQTS2NFSXQSA5QV',
+'OQTS2NFSNEOG5UM',
+'OQTS2NFSWNHFV73',
+'OQTS2NFSWMGF47Q',
+'OQTS2NFSBODHQZM',
+'OQTS2NFSCUPJMOY',
+'OQTS2NFSKC2HZIC');
+
+
+select * from nimc_sync_log nsl 
+where   in ('0QTS2NFSJW5OUEX',
+'0QTS2NFSKUUL63S',
+'0QTS2NFSXQSA5QV',
+'0QTS2NFSNEOG5UM',
+'0QTS2NFSWNHFV73',
+'0QTS2NFSWMGF47Q',
+'0QTS2NFSBODHQZM',
+'0QTS2NFSCUPJMOY',
+'0QTS2NFSKC2HZIC');
+select * from client_activity_log_ext cale 
+where  record_id  in ('0QTS2NFSJW5OUEX',
+'0QTS2NFSKUUL63S',
+'0QTS2NFSXQSA5QV',
+'0QTS2NFSNEOG5UM',
+'0QTS2NFSWNHFV73',
+'0QTS2NFSWMGF47Q',
+'0QTS2NFSBODHQZM',
+'0QTS2NFSCUPJMOY',
+'0QTS2NFSKC2HZIC');
+
+select * from key_detail kd where app_id  = 'com.seamfix.nimc_apk';
+
+-----------===========pi\\\
+
+select * from device_tag_request
+where requested_device_id in ('MANTRA-911573953240458',
+'MANTRA-911573953193392',
+'MANTRA-911573953238411',
+'MANTRA-911573953200502',
+'MANTRA-911573953250259',
+'MANTRA-354628489641670',
+'MANTRA-911573953210303',
+'MANTRA-911573953229865',
+'MANTRA-911573953229634',
+'MANTRA-911573953234113',
+'MANTRA-911573953247958',
+'MANTRA-911573953232703',
+'MANTRA-911573953252172',
+'MANTRA-911573953234634',
+'MANTRA-911573953207853',
+'MANTRA-911573953233842');
+---order by device_id ;
+
+
+
+
+select count(*) from enrollment_notification_log enl 
+
+-------NibssDeviceTagRequest
+SELECT tag as tag from DEVICE_TAG_REQUEST_EXT tag 
+JOIN device_tag_request dtag ON tag.pk = dtag.pk
+where dtag.app_Id = 'com.seamfix.nimc_apk' 
+and dtag.requested_device_id = 'HENA-354628486675184';
+
+SELECT dtag.requested_device_id , esa_code,fep.company_name from DEVICE_TAG_REQUEST_EXT tag 
+JOIN device_tag_request dtag ON tag.pk = dtag.pk
+left join front_end_partner fep on fep.cbs_acct_code = tag.esa_code 
+where dtag.requested_device_id in ('MANTRA-911573953193392',
+'MANTRA-911573953249442'
+);
+
+
+select nsl.* from  enrollment_notification_log enl 
+left join enrollment_ref er on er.device_id  = enl.device_id
+left join nimc_sync_log nsl on nsl.enrollment_ref_fk = er.id
+where -----code = 'DROID-S120-NM0156-1622868655853';
+
+select * from nimc_sync_log nsl ;
+
+select device_id, cbs_request_id, tag_approval_status_enum, esa_code ,o.outlet_code, o.name, 
+o.outlet_username, o.address, na.lga_fk, na.state_fk ,o.mode, o.longitude, o.latitude  
+from device_tag_request_ext dtre 
+left join outlet o on o.pk  = dtre.outlet_fk
+left join node_assignment na on na.outlet_fk  = o.pk
+left join kyc_dealer kd on kd.pk = o.kyc_dealer_fk 
+left join device_tag_request dtr on dtr.pk = dtre.pk
+where device_id ='SAMSUNG-356136108059413';
+
+select dtre.esa_code , fep.company_name from  device_tag_request_ext dtre 
+left join  front_end_partner fep on fep.cbs_acct_code = dtre.esa_code 
+where device_id  = 'HENA-354628486675184';
+
+select device_id, cbs_request_id, tag_approval_status_enum, o.outlet_code, o.name, o.outlet_username,o.mode, o.longitude, o.latitude  
+from device_tag_request_ext dtre 
+left join outlet o on o.pk  = dtre.outlet_fk
+left join node_assignment na on na.outlet_fk  = o.pk
+left join kyc_dealer kd on kd.pk = o.kyc_dealer_fk 
+left join device_tag_request dtr on dtr.pk = dtre.pk
+where o.outlet_code in ('276003','276004', '284001');
+
+select * from setting where UPPER (name) like 'FIXED-CENTER-RADIUS';
+
+
+---update setting set value = '50000'
+---where id = 311;
+
+select * from client_activity_log_ext cale 
+where record_id in ('0QUBW5RSPALS2G9',
+'0QUBW5RS8MOUL6',
+'0QUBW5RSX4URARQ',
+'0QUBW5RSGYNK8OR',
+'0QUBW5RSBBYOW4E',
+'0QUBW5RSLMYIA16',
+'0QUBW5RS1RCRIVA',
+'0QUBW5RSZO052SZ',
+'0QUBW5RSY1CWIXE',
+'0QUBW5RS3LYKVJ8',
+'0QUBW5RS6MNSWZC',
+'0QUBW5RSS0LQ7GA',
+'0QUBW5RSFFE74DT',
+'0QUBW5RSG5XOU69',
+'0QUBW5RSZDXHC6T',
+'0QUBW5RSTSIDCA6',
+'0QUBW5RSOBASZV0',
+'0QUBW5RSBUMCL8A',
+'0QUBW5RSGI3RQIO',
+'0QUBW5RSUOZV5GD',
+'0QUBW5RSHPUEFGP',
+'0QUBW5RS5UZ74IW');
+
+select tracking_id , registration_status, NSL.*  from nimc_sync_log nsl
+where tracking_id  in ('0QUBW5RSPALS2G9',
+'0QUBW5RS8MOUL6',
+'0QUBW5RSX4URARQ',
+'0QUBW5RSGYNK8OR',
+'0QUBW5RSBBYOW4E',
+'0QUBW5RSLMYIA16',
+'0QUBW5RS1RCRIVA',
+'0QUBW5RSZO052SZ',
+'0QUBW5RSY1CWIXE',
+'0QUBW5RS3LYKVJ8',
+'0QUBW5RS6MNSWZC',
+'0QUBW5RSS0LQ7GA',
+'0QUBW5RSFFE74DT',
+'0QUBW5RSG5XOU69',
+'0QUBW5RSZDXHC6T',
+'0QUBW5RSTSIDCA6',
+'0QUBW5RSOBASZV0',
+'0QUBW5RSBUMCL8A',
+'0QUBW5RSGI3RQIO',
+'0QUBW5RSUOZV5GD',
+'0QUBW5RSHPUEFGP',
+'0QUBW5RS5UZ74IW');
+
+
+/*select count (*), tag_approval_status_enum from device_tag_request dtr 
+group by tag_approval_status_enum, requested_device_id
+having requested_device_id in (
+select er.device_id from enrollment_ref er
+join node n on n.enrollment_ref  = er.id
+where n.active = 'True');
+and last_modified between '05-04-2021' and '05-05-2021';*/
+
+select count(er.device_id) , send_status,enl.esa_code, fep.company_name, n.certification_status, enl.notification_mode from node n 
+left join enrollment_ref er  on er.id = n.enrollment_ref
+left join enrollment_notification_log enl on enl.device_id = er.device_id
+left join front_end_partner fep on fep.cbs_acct_code = enl.esa_code 
+group by n.certification_status, enl.esa_code, n.active = '1' , fep.company_name, enl.notification_mode
+having n.certification_status  = 'CERTIFIED' and n.active = '1' and enl.notification_mode = 'PRODUCTION';
+
+select device_id, n.active, deleted, n.certification_status, create_date from enrollment_ref er
+left join node n on n.enrollment_ref = er.id; --where upper(er.device_Id) in ('SAMSUNG-358893192465843',
+'SAMSUNG-358893192465868');
+
+
+
+select device_id, count(*) from enrollment_notification_log enl 
+where device_id = 'SAMSUNG-356136108059405' and enl.notification_mode = 'PRODUCTION'
+and create_date between '2021-5-1' and current_timestamp 
+group by device_id, notification_mode;
+
+
+select * from device_tag_request_approval dtra;
+
+/*update device_tag_request
+set tag_approval_status_enum = 'APPROVED'
+where pk in (2169104);*/
+
+select * from device_tag_request dtr 
+where requested_device_id  = 'HENA-354628486675184';
+
+select * from device_tag_request dtr 
+where tag_approval_status_enum  = 'APPROVED' order by create_date ;
+
+--select * from enrollment_ref er 
+---where device_id in (
+select requested_Device_id from device_tag_request 
+where requested_device_id in (
+select dtr.requested_device_id from device_tag_request_approval dtra
+full join device_tag_request dtr on dtra.device_tag_request_fk  = dtr.pk
+where requested_device_id in ('MANTRA-911573953240458',
+'MANTRA-911573953193392',
+'MANTRA-911573953238411',
+'MANTRA-911573953200502',
+'MANTRA-911573953250259',
+'MANTRA-354628489641670',
+'MANTRA-911573953210303',
+'MANTRA-911573953229865',
+'MANTRA-911573953229634',
+'MANTRA-911573953234113',
+'MANTRA-911573953247958',
+'MANTRA-911573953232703',
+'MANTRA-911573953252172',
+'MANTRA-911573953234634',
+'MANTRA-911573953207853',
+'MANTRA-911573953233842'));
+
+select * from enrollment_ref er 
+where device_id in ('MANTRA-911573953240458',
+'MANTRA-911573953193392',
+'MANTRA-911573953238411',
+'MANTRA-911573953200502',
+'MANTRA-911573953250259',
+'MANTRA-354628489641670',
+'MANTRA-911573953210303',
+'MANTRA-911573953229865',
+'MANTRA-911573953229634',
+'MANTRA-911573953234113',
+'MANTRA-911573953247958',
+'MANTRA-911573953232703',
+'MANTRA-911573953252172',
+'MANTRA-911573953234634',
+'MANTRA-911573953207853',
+'MANTRA-911573953233842');
+and dtra.tag_approval_status_enum = 'APPROVED');
+
+
+select dtre.* from device_tag_request_ext dtre 
+where device_id in ('MANTRA-911573953240458',
+'MANTRA-911573953193392',
+'MANTRA-911573953238411',
+'MANTRA-911573953200502',
+'MANTRA-911573953250259',
+'MANTRA-354628489641670',
+'MANTRA-911573953210303',
+'MANTRA-911573953229865',
+'MANTRA-911573953229634',
+'MANTRA-911573953234113',
+'MANTRA-911573953247958',
+'MANTRA-911573953232703',
+'MANTRA-911573953252172',
+'MANTRA-911573953234634',
+'MANTRA-911573953207853',
+'MANTRA-911573953233842');
+----and outlet_fk is not null and longitude = '0.0' and latitude  = '0.0';
+
+select device_id,n.certification_status from enrollment_ref er
+left join node n on er.id = n.enrollment_ref 
+where device_id in ('SAMSUNG-358893192435291',
+'SAMSUNG-358893192437230',
+'SAMSUNG-358893192437875',
+'SAMSUNG-358893192436067')  ;
+
+
+
+select outlet_code ,name from outlet o where outlet_code  = '426002';
+
+
+
+
+
+
+
+select distinct tracking_id from enrollment_notification_log enl;
+
+select  * from nimc_sync_log
+where tracking_id in (select distinct(record_id) from client_activity_log_ext)
+and tracking_id in (select distinct (tracking_id) from enrollment_notification_log enl);
+
+
+
+
+/*update  device_tag_request 
+set tag_approval_status_enum = 'APPROVED'
+where requested_device_id in ('MANTRA-911573953255118',
+'MANTRA-911573953266834');*/
+
+
+select * from device_tag_request
+where requested_device_id in ('MANTRA-911573953224445',
+'MANTRA-911573953266834',
+'MANTRA-911573953225111',
+'MANTRA-911573953248139',
+'MANTRA-911573953213489',
+'MANTRA-911573953234428');
+
+
+select tracking_id, o.outlet_code, o.name,notification_mode 
+from enrollment_notification_log enl2 
+--left join enrollment_ref er on er.device_id = enl2.device_id 
+--left join node n on n.enrollment_ref = er.id
+left join device_tag_request_ext dtre on dtre.device_id = enl2.device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+where notification_mode = 'PRODUCTION' ;
+
+select * from client_activity_log cal ;
+
+select enl.tracking_id, o.outlet_code, o.name,sync_status, service_response, nsl.registration_status, cal.create_date   
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk 
+left join enrollment_notification_log enl on  enl.tracking_id = cal.unique_activity_code
+left join nimc_sync_log nsl on nsl.tracking_id = enl.tracking_id 
+left join device_tag_request_ext dtre on dtre.device_id = enl.device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+where date(cal.create_date) between '2021-06-30' and date(localtimestamp) order by enl.tracking_id asc;
+
+select cal.ref_device_id "device_id", cal.unique_activity_code "tracking_Id", o.outlet_code, o.name,sync_status, service_response,  cal.create_date   
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+where date(cal.create_date) between '2021-06-30' and date(localtimestamp) order by cal.unique_activity_code desc  ;
+
+
+select enl2.tracking_id, o.outlet_code, o.name, nsl.registration_status ,notification_mode 
+from enrollment_notification_log enl2 
+--left join enrollment_ref er on er.device_id = enl2.device_id 
+--left join node n on n.enrollment_ref = er.id
+left join device_tag_request_ext dtre on dtre.device_id = enl2.device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+left join nimc_sync_log nsl on nsl.tracking_id = enl2.tracking_id 
+where enl2.tracking_id in ('0QTN9PLSQ0ABVWU',
+'0QTN9PLSGB85EWZ',
+'0QTN9PLSO8XQPZJ',
+'0QTN9PLSDK89QYT',
+'0QTN9PLSR1IJKJB',
+'0QTN9PLSKDG85PD',
+'0QTN9PLSOCK10AR',
+'0QTN9PLS3G1KHN6',
+'0QTN9PLSBVMTJOW',
+'0QTN9PLSA763NH',
+'0QTN9PLS69WWORV',
+'0QTN9PLSBPE4P7X',
+'0QTN9PLSTZEGNSF',
+'0QTN9PLSVUVC7XL',
+'0QTN9PLS8YHPMNB');
+
+select * from enrollment_notification_log enl ;
+
+select enl.device_id, enl.tracking_id, registration_status ,notification_mode, enl.create_date  from enrollment_notification_log enl
+left join nimc_sync_log nsl on nsl.tracking_id = enl.tracking_id 
+where notification_mode = 'PRODUCTION' and date(enl.create_date) between  date(localtimestamp)-1 and date(localtimestamp);
+
+select enl.device_id, enl.tracking_id, registration_status ,notification_mode, enl.create_date  from enrollment_notification_log enl
+left join nimc_sync_log nsl on nsl.tracking_id = enl.tracking_id 
+where notification_mode = 'PRODUCTION' and date(enl.create_date) =  date(localtimestamp)-1 
+order by enl.tracking_id, enl.create_date ;
+
+
+select cal.ref_device_id "device_id", cal.unique_activity_code "tracking_Id", sync_status, cale.enrollment_type, cal.create_date, o.outlet_code, o.name, service_response  
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+where date(cal.create_date) between  date(localtimestamp)-2 and date(localtimestamp)  order by cal.unique_activity_code, cal.create_date  desc  ;
+
+select cal.ref_device_id "device_id", cal.unique_activity_code "tracking_Id", sync_status, cale.enrollment_type, enl.notification_mode ,cal.create_date, o.outlet_code, o.name, service_response  
+from client_activity_log_ext cale 
+left join client_activity_log cal on cal.pk = cale.pk
+left join enrollment_notification_log enl on enl.tracking_id = cal.unique_activity_code
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+where  date(cal.create_date) 
+between  date(localtimestamp)-2 and date(localtimestamp)  order by cal.unique_activity_code, cal.create_date  desc  ;
+
+
+select cal.ref_device_id "device_id", cal.unique_activity_code "tracking_Id", sync_status, cale.enrollment_type, enl.notification_mode ,cal.create_date, o.outlet_code, o.name, service_response  
+from client_activity_log_ext cale 
+left join client_activity_log cal on cal.pk = cale.pk
+left join enrollment_notification_log enl on enl.tracking_id = cal.unique_activity_code
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+where enl.notification_mode = 'PRODUCTION' and cal.unique_activity_code in ('0QTUBXKS2ALB4D9',
+'QTUBXKSOQAKWM2');
+--and date(cal.create_date) between  date(localtimestamp)-2 and date(localtimestamp)  order by cal.unique_activity_code, cal.create_date  desc  ;
+
+select cal.ref_device_id "device_id", cal.unique_activity_code "tracking_Id", sync_status, cal.create_date, o.outlet_code, o.name, service_response  
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+where cal.ref_device_id = 'SAMSUNG-358893192456248' and date(cal.create_date) = date(localtimestamp)  order by cal.unique_activity_code, cal.create_date  desc  ;
+
+select cal.ref_device_id "device_id", cal.unique_activity_code "tracking_Id", sync_status, cal.create_date, o.outlet_code, o.name, service_response  
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+where sync_status <> 'SYNC_CONFIRMED'  order by cal.unique_activity_code, cal.create_date  desc  ;
+
+select cal.ref_device_id "device_id", cal.unique_activity_code "tracking_Id", sync_status, cal.create_date, o.outlet_code, o.name, service_response  
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+where service_response like '40%'  order by cal.unique_activity_code, cal.create_date  desc  ;
+
+
+select cal.ref_device_id "device_id", dtre.cbs_request_id ,cal.unique_activity_code "tracking_Id", sync_status, cal.create_date, o.outlet_code, o.name, service_response  
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+where service_response like '40%'  order by cal.unique_activity_code, cal.create_date  desc  ;
+
+select enl.device_id, enl.tracking_id, registration_status ,notification_mode, enl.create_date  from enrollment_notification_log enl
+left join nimc_sync_log nsl on nsl.tracking_id = enl.tracking_id 
+where enl.tracking_id in ('0QUP3GISQKD796P',
+'0QUP3GISY5LMMCA',
+'0QUP3GISYAQQEYK',
+'0QUP3GISNC9EZY8',
+'0QUP3GIS1Q1OVNC',
+'0QUP3GISOXJMWZZ',
+'0QUP3GIS2HZ509J',
+'0QUP3GISYMH3TL3'
+);
+
+
+select *  from enrollment_notification_log enl 
+where date(create_date) = date(localtimestamp);
+
+'MANTRA-911573953224445',
+'MANTRA-911573953266834',
+'MANTRA-911573953225111',
+'MANTRA-911573953248139',
+'MANTRA-911573953213489',
+'MANTRA-911573953234428',
+
+select distinct msisdn as "tracking_id", nsl.filename, nsl.create_date from agility_integration_log_ ail
+left join nimc_sync_log nsl on nsl.tracking_id = ail.msisdn 
+where msisdn  in ('0QVCE2QS1UTHH0C',
+'0QVCE2QSIW8VM4Y',
+'0QVCE2QSFI2ERKE',
+'0QVCE2QSXPRN46L') order by nsl.create_date desc ;
+
+
+select date(create_date) from enrollment_notification_log enl where date(create_date) = date(localtimestamp);
+
+select *  from  enrollment_notification_log enl where device_id = 'SAMSUNG-352231115638467';
+
+select * from enrollment_ref er where code = 'DROID-S120-NM0156-1624669569238';
+
+select create_date, tracking_id, nsl.* from nimc_sync_log nsl 
+left join node n on n.
+where tracking_id not in (select record_id  from client_activity_log_ext cale );
+
+
+---select distinct device_id  from device_activation_data;
+
+select  enl.device_Id , dad.prod_backend_ws_password, dad.prod_backend_ws_username, nsl.filename, nsl.target_path, cal.create_date 
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+left join nimc_sync_log nsl on nsl.tracking_id = cal.unique_activity_code
+left join enrollment_notification_log enl on enl.tracking_id = cal.unique_activity_code
+left join device_activation_data dad on dad.outlet_code = o.outlet_code and dad.device_id = enl.device_id 
+where sync_status = 'SYNC_CONFIRMED' and enl.notification_mode = 'PRODUCTION' order by cal.unique_activity_code, cal.create_date  desc  ;
+
+select  enl.device_Id , dad.prod_backend_ws_password, dad.prod_backend_ws_username, nsl.filename, nsl.target_path, cal.create_date 
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+left join nimc_sync_log nsl on nsl.tracking_id = cal.unique_activity_code
+left join enrollment_notification_log enl on enl.tracking_id = cal.unique_activity_code
+left join device_activation_data dad on dad.outlet_code = o.outlet_code and dad.device_id = enl.device_id
+where cal.unique_activity_code = '0QRZIMQSPZM4FO6';
+
+
+
+
+select nsl.tracking_id , nsl.filename, nsl.target_path, sync_status, enl.notification_mode,cal.create_date 
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+left join nimc_sync_log nsl on nsl.tracking_id = cal.unique_activity_code
+left join enrollment_notification_log enl on enl.tracking_id = cal.unique_activity_code 
+where sync_status = 'SYNC_CONFIRMED' and enl.notification_mode = 'PRODUCTION' and date(cal.create_date) between '2021-07-03' and date(localtimestamp) order by cal.unique_activity_code, cal.create_date  desc  ;
+
+
+select  enl.device_Id, nsl.tracking_id , dad.prod_backend_ws_password, dad.prod_backend_ws_username, nsl.filename, nsl.target_path, enl.notification_mode, o.outlet_code ,cal.create_date 
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+left join nimc_sync_log nsl on nsl.tracking_id = cal.unique_activity_code
+left join enrollment_notification_log enl on enl.tracking_id = cal.unique_activity_code
+left join device_activation_data dad on dad.outlet_code = o.outlet_code and dad.device_id = enl.device_id
+left join enrollment_ref er on dtre.device_id = er.device_id
+left join node n  on er.id = n.enrollment_ref
+where o.outlet_code is not null and dtre.outlet_fk is not null and enl.device_id  is not null and enl.notification_mode = 'PRODUCTION' and date(cal.create_date) between '2021-07-03' and date(localtimestamp) 
+and cale.sync_status = 'SYNC_CONFIRMED' order by cal.unique_activity_code, cal.create_date  desc;
+---where sync_status = 'SYNC_CONFIRMED' and enl.notification_mode = 'PRODUCTION' and date(cal.create_date) between '2021-07-03' and date(localtimestamp) order by cal.unique_activity_code, cal.create_date  desc  ;
+
+
+select  enl.device_Id, nsl.tracking_id , dad.prod_backend_ws_password, dad.prod_backend_ws_username, nsl.filename, nsl.target_path, enl.notification_mode, o.outlet_code ,cal.create_date 
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+left join nimc_sync_log nsl on nsl.tracking_id = cal.unique_activity_code
+left join enrollment_notification_log enl on enl.tracking_id = cal.unique_activity_code
+left join device_activation_data dad on dad.outlet_code = o.outlet_code and dad.device_id = enl.device_id
+left join enrollment_ref er on dtre.device_id = er.device_id
+left join node n  on er.id = n.enrollment_ref
+where o.outlet_code is not null and dtre.outlet_fk is not null and enl.device_id  is not null and date(cal.create_date) between '2021-07-03' and date(localtimestamp) 
+and cale.sync_status like 'SYNC_FAILED_VALIDATION' order by cal.unique_activity_code, cal.create_date  desc;
+---where sync_status = 'SYNC_CONFIRMED' and enl.notification_mode = 'PRODUCTION' and date(cal.create_date) between '2021-07-03' and date(localtimestamp) order by cal.unique_activity_code, cal.create_date  desc  ;
+
+
+select nsl.tracking_id , nsl.filename, nsl.target_path, sync_status, response_code,enl.notification_mode,cal.create_date 
+from client_activity_log_ext cale
+left join client_activity_log cal on cal.pk = cale.pk
+left join device_tag_request_ext dtre on dtre.device_id = cal.ref_device_id 
+left join outlet o on o.pk  = dtre.outlet_fk
+left join nimc_sync_log nsl on nsl.tracking_id = cal.unique_activity_code
+left join enrollment_notification_log enl on enl.tracking_id = cal.unique_activity_code 
+where sync_status LIKE 'SYNC_FAILED_VALIDATION' and date(cal.create_date) between '2021-07-03' and date(localtimestamp) 
+order by cal.unique_activity_code, cal.create_date  desc ;
+
+SELECT table_catalog, table_schema, table_name,column_name, data_type, numeric_precision
+FROM information_schema.columns 
+WHERE table_schema='public'  and  column_name like '%cbs_request%';
+
+select unique_activity_code, create_date, last_modified from client_activity_log cal 
+where cal.unique_activity_code in ('0QTUBXKSPEO2NXE', 
+'0QTUBXKSZ8NY235',
+'0QTUBXKSGPDB1EA', 
+'0QTUBXKS3S0KE6Z', 
+'0QTUBXKSOKH915Q', 
+'0QTU2KSUEPB05K',  
+'0QTUBXKSOKH915Q', 
+'0QTUBXKSBD4W6SZ');
+
+select tracking_id , create_date, last_modified from nimc_sync_log nsl 
+where tracking_id in ('0QTUBXKSPEO2NXE', 
+'0QTUBXKSZ8NY235',
+'0QTUBXKSGPDB1EA', 
+'0QTUBXKS3S0KE6Z', 
+'0QTUBXKSOKH915Q', 
+'0QTU2KSUEPB05K',  
+'0QTUBXKSOKH915Q', 
+'0QTUBXKSBD4W6SZ');
+
+select * from provisioned_vendors pv;
+
+select * from enrollment_notification_log enl
+where date(create_date) <= '2021-06-08' and notification_mode = 'PRODUCTION'; ---37,768,   24,523, 18,913
+
+
+select * from enrollment_notification_log enl
+where date(create_date) = date(localtimestamp) and notification_mode = 'PRODUCTION';
+
+
+select * from setting where name = 'MAX-CLIENT-RECORD-STORAGE-INTERVAL';
+----update setting set value = '864000000' where id = 2098;
+
+
+--SELECT * from lock_monitor;
+
+
+
+
+
+ALL FREQUENT QURIES ++.txt
+Displaying ALL FREQUENT QURIES ++.txt. 

@@ -1,0 +1,488 @@
+select from outlet o;
+
+select distinct (er.device_id), enl.esa_code from enrollment_ref er
+join node n  on er.id = n.enrollment_ref
+join enrollment_notification_log enl on enl.device_id = er.device_id 
+group by n.certification_status, enl.esa_code 
+having n.certification_status  = 'CERTIFIED';
+
+
+
+select  distinct (device_id), esa_code from enrollment_notification_log enl
+where device_id in (select er.device_id from enrollment_ref er
+join node n  on er.id = n.enrollment_ref
+where n.certification_status  = 'CERTIFIED'
+);
+
+select * from enrollment_notification_log enl;
+
+select count(distinct (er.device_id)), n.certification_status from enrollment_ref er
+join node n  on er.id = n.enrollment_ref
+group by n.certification_status
+having n.certification_status  = 'CERTIFIED';
+
+
+
+select distinct (er.device_id)|| '----' || enl.esa_code || '----'|| n.certification_status from enrollment_ref er
+join node n  on er.id = n.enrollment_ref
+join enrollment_notification_log enl on enl.device_id = er.device_id 
+---group by n.certification_status, enl.esa_code 
+where n.certification_status  = 'CERTIFIED';
+
+
+
+
+
+/*select * from setting where name='ENABLE-GLOBAL-RADIUS';
+
+update setting set value = 'false' where id=310;*/
+
+
+
+
+
+
+select * from nimc_sync_log order by last_modified desc;
+
+
+
+select * from nimc_sync_log order by last_modified desc;
+
+select * from client_activity_log_ext where record_id ='0QSA9WPS2XJYQ3S';
+
+
+
+select tracking_id, filename from nimc_sync_log nsl
+where tracking_id  in ('0QO4YGQSOVG1X3T',
+'0QO4YGQSYTVZN0X',
+'0QO4YGQSFN72ZKB',
+'0QO4YGQSE6FYDYX',
+'0QO4YGQST29IND6',
+'0QO4YGQSGYUPLET',
+'0QNZTOLSR4P3C5L',
+'0QNZTOLS0UEHOVH',
+'0QNZTOLSX3PC3OI',
+'0QQVUE5SKYFIL7Z', 
+'0QQVUE5SBO8SW05', 
+'0QQVUE5SFGSOQ5P');
+
+
+select tracking_id , registration_status  from nimc_sync_log nsl
+where tracking_id  in ('0QO4YGQSOVG1X3T',
+'0QO4YGQSYTVZN0X',
+'0QO4YGQSFN72ZKB',
+'0QO4YGQSE6FYDYX',
+'0QO4YGQST29IND6',
+'0QO4YGQSGYUPLET',
+'0QNZTOLSR4P3C5L',
+'0QNZTOLS0UEHOVH',
+'0QNZTOLSX3PC3OI',
+'0QQVUE5SKYFIL7Z', 
+'0QQVUE5SBO8SW05', 
+'0QQVUE5SFGSOQ5P');
+
+select registration_status from node;
+where registration;
+select * from zz_device_tag_request_ext zdtre ;
+
+select * from device_tag_request;
+ALTER TABLE zz_device_tag_request_ext
+ADD device_id varchar(255);
+
+
+select * from zz_outlet zo;
+
+/*alter table zz_outlet drop constraint zz_outlet_pkey;
+
+alter table zz_outlet add primary key (pk);
+
+create table zz_auditor_bkup040521 as
+select * from zz_auditor za;
+
+select pk, count(pk) from zz_outlet
+group by pk 
+having count(pk) > 1;
+
+----alter table zz_outlet alter column id drop not null ;
+
+
+select pk,* from zz_outlet zo 
+where pk in (12318,
+12307,
+22995)
+and revtype = 0;
+
+
+delete from zz_outlet zo 
+where pk in (12318,
+12307,
+22995)
+and revtype = 0;*/
+
+
+select * from heart_beat_status hbs ;
+select * from outlet o order by o.last_modified ;
+select hb.display_incorrect_time from heart_beat hb ;
+
+update outlet set mode = 'MOBILE' where mode = 'true';
+
+select count(distinct(device_id))"Device_id", N.active from enrollment_ref er
+join node n on n.enrollment_ref  = er.id
+group by n.active having n.active = 'True';
+
+--with tab1 as (;
+select count(*), c from device_tag_request dtr 
+group by tag_approval_status_enum, requested_device_id
+having requested_device_id in (
+select er.device_id from enrollment_ref er
+join node n on n.enrollment_ref  = er.id
+where n.active = 'True');
+
+/*)
+select count(*), tag_approval_status_enum from tab1 group by tag_approval_status_enum;*/
+
+
+select count (*) from device_tag_request dtr 
+---group by tag_approval_status_enum, requested_device_id
+where requested_device_id in (
+select er.device_id from enrollment_ref er
+join node n on n.enrollment_ref  = er.id
+where n.active = 'True')
+and last_modified between '05-04-2021' and '05-05-2021';
+
+select distinct esa_code, enroller_name, device_id from enrollment_notification_log enl;
+
+select distinct esa_code, fep.company_name from enrollment_notification_log enl
+left join front_end_partner fep on fep.cbs_acct_Code = enl.esa_code ;
+
+
+select * from front_end_partner fep;
+
+
+select count(er.device_id), n.certification_status from enrollment_ref er
+join node n on n.enrollment_ref  = er.id
+group by n.certification_status;
+having n.active = 'True';
+
+
+select * from device_tag_request_ext  dtr where dtr .cbs_request_id like '%SAMSUNG-356136108059405%';
+
+---create table heart_beat_bkup_05062021 as
+select * from heart_beat hb;
+select * from setting s where s."name" ='ENABLE-GLOBAL-RADIUS';
+--update setting  set value = 'true' where id = 310;
+
+/*ALTER TABLE public.outlet
+ALTER COLUMN mobile TYPE boolean using mobile::boolean;*/
+
+/*ALTER TABLE heart_beat
+ALTER COLUMN rooted TYPE boolean using rooted::boolean;
+
+ALTER TABLE public.heart_beat
+ALTER COLUMN MOCKED_COORDINATE TYPE boolean using MOCKED_COORDINATE::boolean;
+
+ALTER TABLE public.heart_beat
+ALTER COLUMN PHONE_STATUS_ENABLED TYPE boolean using PHONE_STATUS_ENABLED::boolean;
+
+ALTER TABLE public.heart_beat
+ALTER COLUMN LOCATION_PERMISSION_GRANTED TYPE boolean using LOCATION_PERMISSION_GRANTED::boolean;
+
+ALTER TABLE public.heart_beat
+ALTER COLUMN LOCATION_PERMISSION_GRANTED TYPE boolean using LOCATION_PERMISSION_GRANTED::boolean;*/
+
+
+
+
+
+select count (distinct device_id) from enrollment_ref er, node n2 
+where n2.enrollment_ref = er.id and n2.active = '1'; ---and n2.deleted = '0';
+
+select * from device_tag_request_ext where cbs_request_id ='HENA-354628482806593';
+
+select  distinct esa_code, device_id from enrollment_notification_log enl
+where device_id in (
+select er.device_id from enrollment_ref er
+join node n on n.enrollment_ref  = er.id
+where   N.active = '1' and n.certification_status  = upper('Certified'));
+
+---);
+
+select er. from node n 
+join enrollment_ref er on er.id = n.enrollment_ref
+where N.active = '1' and n.certification_status  = upper('Certified');
+
+select distinct esa_code, enroller_name, device_id from enrollment_notification_log enl;
+
+select distinct device_id from enrollment_ref;
+
+
+
+select * from front_end_partner fep  ;
+
+select fdm.device_id || '----------' || fep.company_name || '----------' || fep.cbs_acct_code from fep_device_mapping fdm
+join front_end_partner fep ON fep.pk = fdm.front_end_partner_fk 
+where fdm.device_id in (
+select er.device_id from enrollment_ref er
+join node n on n.enrollment_ref  = er.id
+where   N.active = '1' and n.certification_status  = upper('Certified'));
+
+
+select * from nimc_sync_log nsl;
+
+select count(*), notification_mode from (
+select count(*), notification_mode from enrollment_notification_log enl 
+group by notification_mode, last_modified 
+having last_modified between '04-01-2021' and '04-30-2021') a
+group by notification_mode; 
+
+
+select count(No_of_devices) as No_of_devices, company_name, cbs_acct_code from 
+(select count(fdm.device_id) as No_of_devices, fep.company_name, fep.cbs_acct_code from fep_device_mapping fdm
+join front_end_partner fep ON fep.pk = fdm.front_end_partner_fk 
+group by fep.company_name, fep.cbs_acct_code, device_id
+having fdm.device_id in (
+select er.device_id from enrollment_ref er
+join node n on n.enrollment_ref  = er.id
+where   N.active = '1' ) /*and n.certification_status  = upper('Certified'))*//*and n.last_modified between (current_date - 1) and current_date)*/ 
+and  fep.cbs_acct_code in ('NM0160','NM0127','NM0162')) a group by company_name, cbs_acct_code;
+
+
+
+/*update  node  
+set create_date = dtra.create_date, last_modified = dtra.last_modified from node n
+left join enrollment_ref er on n.enrollment_ref  = er.id
+left join device_tag_request dtr on dtr.requested_device_id = er.device_id
+left join device_tag_request_approval dtra on dtr.pk = device_tag_request_fk
+where dtra.create_date  in ( select min(create_date) from device_tag_request_approval group by device_tag_request_fk);*/
+
+
+
+select count(*), tag_approval_status_enum from device_tag_request dtr 
+group by tag_approval_status_enum;
+
+
+select o.pk, o.outlet_code,outlet_username , fepp.cbs_acct_code from  outlet o
+left join device_tag_request_ext dtre  on o.pk = dtre.outlet_fk
+left join front_end_partner fepp on fepp.pk = o.fep_fk 
+where dtre.device_id = :deviceid;
+
+
+
+select count(er.device_id) , enl.esa_code, fep.company_name, n.certification_status, enl.notification_mode from node n 
+left join enrollment_ref er  on er.id = n.enrollment_ref
+left join enrollment_notification_log enl on enl.device_id = er.device_id
+left join front_end_partner fep on fep.cbs_acct_code = enl.esa_code 
+group by n.certification_status, enl.esa_code, n.active = '1' , fep.company_name, enl.notification_mode
+having n.certification_status  = 'CERTIFIED' and n.active = '1' and enl.notification_mode = 'PRODUCTION';
+
+
+
+SELECT n.id, n.certification_status, er.DEVICE_ID, n.sync_status  FROM ENROLLMENT_REF er 
+LEFT JOIN node n ON n.ENROLLMENT_REF = er.ID
+WHERE er.device_id  in (
+SELECT device_id from enrollment_notification_log enl where notification_mode = 'PRODUCTION');
+
+
+select count(er.device_id) , enl.esa_code, fep.company_name, n.certification_status, enl.notification_mode from node n 
+left join enrollment_ref er  on er.id = n.enrollment_ref
+left join enrollment_notification_log enl on enl.device_id = er.device_id
+left join front_end_partner fep on fep.cbs_acct_code = enl.esa_code 
+group by n.certification_status, enl.esa_code, n.active = '1' , fep.company_name, enl.notification_mode
+having n.certification_status  = 'CERTIFIED' and n.active = '1' and enl.notification_mode = 'PRODUCTION';  -----987
+
+
+
+
+select send_status, esa_code, originating_center_code , originating_center_name, create_date, last_modified from enrollment_notification_log enl where notification_mode = 'PRODUCTION' order by create_date DESC;
+
+
+select cbs_request_id from device_tag_request_ext dtre where device_id  = 'HENA-354628486675184';
+
+
+
+
+select count(NoofDevices), esa_code, company_name from (
+select count(er.device_id) as NoofDevices , enl.esa_code, fep.company_name, n.certification_status, enl.notification_mode from node n 
+left join enrollment_ref er  on er.id = n.enrollment_ref
+left join enrollment_notification_log enl on enl.device_id = er.device_id
+left join front_end_partner fep on fep.cbs_acct_code = enl.esa_code 
+group by n.certification_status, enl.esa_code, n.active = '1' , fep.company_name, enl.notification_mode, enl.create_date
+having n.certification_status  = 'CERTIFIED' and n.active = '1' and enl.notification_mode = 'PRODUCTION' and enl.create_date > '2021-05-19') a group by esa_code, company_name order by company_name ;
+
+
+
+
+select current_date;
+
+
+
+------update setting set VALUE = value ||',ZF10' where id = 41682367;
+
+
+select * from setting s where value like '%11211%';
+
+
+select * from   outlet o2  ;
+
+
+select device_id, cbs_request_id, o.outlet_code, o.name, o.outlet_username, kd.pk, o.address, na.lga_fk, na.state_fk ,o.mode, o.longitude, o.latitude  from device_tag_request_ext dtre 
+left join outlet o on o.pk  = dtre.outlet_fk
+left join node_assignment na on na.outlet_fk  = o.pk
+left join kyc_dealer kd on kd.pk = o.kyc_dealer_fk 
+where device_id = 'MANTRA-911573953232273';
+
+
+select device_id, cbs_request_id, o.outlet_code, o.name, o.outlet_username, o.mode, o.longitude, o.latitude  from device_tag_request_ext dtre 
+left join outlet o on o.pk  = dtre.outlet_fk 
+where device_id = 'HENA-354628482803004';
+
+
+
+select enrollment_ref_fk, dtr.* from device_tag_request dtr where requested_device_id = 'SAMSUNG-356196381726856';
+
+
+
+
+
+SELECT DEVICE_ID ,er.*,n.id, n.certification_status, er.DEVICE_ID  FROM ENROLLMENT_REF er 
+LEFT JOIN node n ON n.ENROLLMENT_REF = er.ID
+WHERE er.device_id  = 'HENA-354628482851003';
+
+
+SELECT n.id, n.certification_status, er.DEVICE_ID, n.sync_status  FROM ENROLLMENT_REF er 
+LEFT JOIN node n ON n.ENROLLMENT_REF = er.ID
+WHERE er.device_id  = 'HENA-354628489605063';
+
+
+
+select *  from client_activity_log_ext cale;
+
+
+select REGISTRATION_STATUS  from nimc_sync_log nsl ;
+
+
+select distinct sync_status from node o ;
+
+/*update node
+set certification_status = null
+where id = 2188270;*/
+
+
+select count(countq), send_status from (
+select  count(pk) "countq", send_status from enrollment_notification_log enl2 
+group by send_status, notification_mode , create_date
+having notification_mode = 'PRODUCTION' and cast(create_date as date) = cast(current_date as date)) a group by send_status ;
+
+
+select  count(pk) "countq", send_status from enrollment_notification_log enl2 
+group by send_status, notification_mode 
+having notification_mode = 'PRODUCTION';
+
+select  count(pk) "countq", send_status,create_date  from enrollment_notification_log enl2 
+group by send_status, notification_mode , create_date
+having notification_mode = 'PRODUCTION' and cast(create_date as date) = cast(current_date as date); 
+
+
+select cast (create_date as date) from enrollment_notification_log enl ; 
+
+
+SELECT n.id, n.certification_status, er.DEVICE_ID, n.sync_status  FROM ENROLLMENT_REF er 
+LEFT JOIN node n ON n.ENROLLMENT_REF = er.ID
+WHERE er.device_id  in (
+SELECT device_id from enrollment_notification_log enl where notification_mode = 'PRODUCTION');
+
+
+
+
+
+SELECT table_catalog, table_schema, table_name,column_name, data_type, numeric_precision
+FROM information_schema.columns 
+WHERE table_schema='public' and column_name = 'sync_status';
+
+
+select device_id, cbs_request_id, o.outlet_code, o.name, o.outlet_username, o.mode, o.longitude, o.latitude  from device_tag_request_ext dtre 
+left join outlet o on o.pk  = dtre.outlet_fk 
+where dtre.device_id IN ('MANTRA-911573953232273', 'SAMSUNG-356196381726856');
+
+
+select * from device_tag_request_ext dtre where device_id = 'HENA-354628489605063';
+
+
+select * from device_tag_request_approval dtra ;
+
+
+
+
+
+
+select  device_id,tracking_id, notification_mode ,send_status from enrollment_notification_log enl2 
+where notification_mode = 'PRODUCTION' and send_status = 'SUCCESS';
+
+
+
+select  device_id,tracking_id ,send_status from enrollment_notification_log enl2 
+where  notification_mode = 'PRODUCTION' and send_status = 'SUCCESS' and tracking_id  = '0QM3X6BSEFVW005%';
+
+select  device_id,tracking_id, notification_mode ,send_status from enrollment_notification_log enl2 
+where tracking_id  = '0QM3X6BSEFVW005';
+
+
+
+
+select * from enrollment_notification_log order by create_date desc;  ------2,573, 2,576
+
+
+select * from agility_integration_log_ where lower(request_type)  = 'device_activation';
+
+
+select count(tracking_id), tracking_id from enrollment_notification_log group by tracking_id  having count(tracking_id ) > 1;
+
+
+select * from setting s where "name" = 'THRESHOLD-VERSION';
+
+/*update setting
+set value = '31'
+where id =2095;*/
+
+select * from setting s where value like  'C:%';
+
+
+
+select dtre.cbs_request_id, tag_approval_status_enum, requested_device_id, dtre.esa_code 
+from device_tag_request dtr left join device_tag_request_ext dtre on  dtre.pk = dtr.pk 
+where  dtre.cbs_request_id = 'MANTRA-911573953232273-1622048602617';
+
+select * from device_tag_request dtr;
+
+
+select er.device_id , enl.esa_code, fep.company_name, n.certification_status, enl.notification_mode 
+from node n 
+left join enrollment_ref er  on er.id = n.enrollment_ref
+left join enrollment_notification_log enl on enl.device_id = er.device_id
+left join front_end_partner fep on fep.cbs_acct_code = enl.esa_code 
+where er.device_id = 'MANTRA-911573953232273'; 
+
+
+
+
+select * from client_activity_log_ext cale;
+
+select * from nimc_sync_log order by last_modified desc;
+
+
+select * from outlet o2 ;
+
+
+
+
+
+
+---------TOTAL ENROLLMENTS----------
+select count(*) as total
+from enrollment_notification_log enl 
+left join front_end_partner fep on fep.cbs_acct_code =enl.esa_code
+left join fep_device_mapping fdm on fep.pk = fdm.front_end_partner_fk
+left join device_tag_request d on d.requested_device_id =fdm.device_id
+left join device_tag_request_ext dte on dte.pk =d.pk
+where notification_mode ='PRODUCTION' and enl.device_id in (select  distinct er.device_id                         
+										from enrollment_ref er join node  on node.enrollment_ref  = er.id where  lower(certification_status) ='certified' and node.active='1' );

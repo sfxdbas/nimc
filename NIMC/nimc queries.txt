@@ -1,0 +1,27 @@
+
+----Count_of_Live_Enrollments_Inception_till_date_For_(Airtel,MTN,9MOBILE,SEAMFIX)
+select count(*) as Count_of_Live_Enrollments, enl.esa_code, fep.company_name from enrollment_notification_log enl
+left join front_end_partner fep on fep.cbs_acct_code = enl.esa_code 
+where enl.notification_mode = 'PRODUCTION' and enl.esa_code in ('NM0160','NM0127','NM0156','NM0162', 'NM0316')
+group by enl.esa_code,fep.company_name;
+
+
+
+------count_of_certified_from_inception_till_date(SEAMFIX,MTN,9MOBILE,AIRTEL)
+select count(*) count_of_certified, dtre.esa_code, fep.company_name from enrollment_ref er 
+left join node n on n.enrollment_ref = er.id 
+left join device_tag_request_ext dtre on dtre.device_id = er.device_id
+left join front_end_partner fep on fep.cbs_acct_code = dtre.esa_code 
+where n.certification_status = 'CERTIFIED' and dtre.esa_code in ('NM0160','NM0127','NM0156','NM0162','NM0316')
+group by dtre.esa_code, fep.company_name;
+
+
+
+------Count_of_Activated_Devices_From_Inception_till_date (SEAMFIX, MTN, 9MOBILE, AIRTEL)
+select count(*) as Count_of_Activated_Devices, dtre.esa_code, fep.company_name from device_tag_request dtr
+left join device_tag_request_ext dtre on dtre.pk = dtr.pk 
+left join front_end_partner fep on fep.cbs_acct_code = dtre.esa_code 
+where dtr.tag_approval_status_enum = 'APPROVED' and dtre.esa_code in ('NM0160','NM0127','NM0156','NM0162','NM0316')
+group by dtre.esa_code,fep.company_name;
+
+

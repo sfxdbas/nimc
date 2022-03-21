@@ -1,0 +1,4 @@
+/*----insert into key_detail 
+select nextval('hibernate_sequence'), curr_priv_key, curr_pub_key, pass_phrase, prev_priv_key, prev_pub_key, 
+'com.seamfix.sasp.agent' as app_id, trial009
+from key_detail kd where app_id = 'com.seamfix.nimc_apk';*/

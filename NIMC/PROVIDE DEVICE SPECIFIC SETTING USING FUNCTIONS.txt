@@ -1,0 +1,33 @@
+
+----how to use the function to create device specific setting
+SELECT public.create_device_setting_SKIP_FINGERPRINT ('{device_ids}');
+SELECT public.create_device_setting_SKIP_FINGERPRINT ('{INFINIX-356545099122008}');
+
+SELECT public.create_device_setting_SKIP_FINGERPRINT ('{INFINIX-356545099122008,
+SAMSUNG-355646071756655,
+HMDGLOBAL-356020084565348,
+SAMSUNG-356136101332346}');
+
+----how to use the function to create device specific setting
+SELECT public.create_device_setting_DIASPORA_ENROLLMENT_USE_CASE ('{INFINIX-356545099122008');
+
+SELECT public.create_device_setting_DIASPORA_ENROLLMENT_USE_CASE ('{INFINIX-356545099122008,
+SAMSUNG-355646071756655,
+HMDGLOBAL-356020084565348,
+SAMSUNG-356136101332346}');
+
+----how to use the function to create device specific setting
+SELECT public.create_device_setting_SKIP_FINGERPRINT_REASONS ('{INFINIX-356545099122008}');
+
+SELECT public.create_device_setting_SKIP_FINGERPRINT_REASONS ('{INFINIX-356545099122008,
+SAMSUNG-355646071756655,
+HMDGLOBAL-356020084565348,
+SAMSUNG-356136101332346}');
+
+----how to use the function to create device specific setting
+SELECT public.create_device_setting_ADULT_CHILD_MODIFICATION ('{INFINIX-356545099122008}');
+
+SELECT public.create_device_setting_ADULT_CHILD_MODIFICATION ('{INFINIX-356545099122008,
+SAMSUNG-355646071756655,
+HMDGLOBAL-356020084565348,
+SAMSUNG-356136101332346}');
